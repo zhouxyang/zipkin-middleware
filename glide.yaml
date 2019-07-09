@@ -1,0 +1,6 @@
+package: zipkin-middleware
+import:
+- package: github.com/opentracing/opentracing-go
+  version: ^1.1.0
+- package: github.com/openzipkin-contrib/zipkin-go-opentracing
+  version: ^0.3.5

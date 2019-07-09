@@ -1,0 +1,28 @@
+hash: d23a5b8ac55c023f355e7e8ec3b2bb1ec639cf114e4a5d4dbf7c510934316140
+updated: 2019-07-09T17:43:05.313335+08:00
+imports:
+- name: github.com/gorilla/context
+  version: 08b5f424b9271eedf6f9f0ce86cb9396ed337a42
+- name: github.com/gorilla/mux
+  version: 757bef944d0f21880861c2dd9c871ca543023cba
+- name: github.com/justinas/alice
+  version: 1051eaf52fcafdd87ead59d28b065f1fcb8274ec
+- name: github.com/opentracing/opentracing-go
+  version: 659c90643e714681897ec2521c60567dd21da733
+- name: github.com/openzipkin-contrib/zipkin-go-opentracing
+  version: f0f479ad013a498e4cbfb369414e5d3880903779
+- name: github.com/openzipkin/zipkin-go
+  version: 55065cdaa9e9c0e50c02038d5206f9cf0c1d4779
+  subpackages:
+  - idgenerator
+  - middleware/http
+  - model
+  - propagation
+  - propagation/b3
+  - reporter
+  - reporter/http
+- name: google.golang.org/grpc
+  version: 1d89a3c832915b2314551c1d2a506874d62e53f7
+  subpackages:
+  - metadata
+testImports: []
