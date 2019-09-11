@@ -24,13 +24,19 @@ func IndexHandlerbaidu(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, err)
 		return
 	}
-
-	resp, err := client.DoWithAppSpan(req, "requestid")
+	/*
+		resp, err := client.DoWithAppSpan(req, "requestid")
+		if err != nil {
+			fmt.Fprintln(w, err)
+			return
+		}
+	*/
+	req = req.WithContext(r.Context())
+	resp, err := client.Do(req)
 	if err != nil {
 		fmt.Fprintln(w, err)
 		return
 	}
-
 	defer resp.Body.Close()
 	fmt.Fprintln(w, "success")
 }
@@ -46,7 +52,7 @@ func IndexHandlersina(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	req = req.WithContext(r.Context())
-	resp, err := client.DoWithAppSpan(req, "requestid")
+	resp, err := client.Do(req)
 	if err != nil {
 		fmt.Fprintln(w, err)
 		return
@@ -69,7 +75,7 @@ func IndexHandlersohu(w http.ResponseWriter, r *http.Request) {
 	}
 
 	req = req.WithContext(r.Context())
-	resp, err := client.DoWithAppSpan(req, "requestid")
+	resp, err := client.Do(req)
 	if err != nil {
 		fmt.Fprintln(w, err)
 		return
@@ -83,7 +89,7 @@ func main() {
 	reporter := httpreporter.NewReporter("http://localhost:9411/api/v2/spans")
 	defer reporter.Close()
 	// create our local service endpoint
-	endpoint, err := zipkin.NewEndpoint("myService", "localhost:9411")
+	endpoint, err := zipkin.NewEndpoint("myService", "localhost:0")
 	if err != nil {
 		log.Fatalf("unable to create local endpoint: %+v\n", err)
 	}
@@ -98,7 +104,6 @@ func main() {
 	serverMiddleware := zipkinhttp.NewServerMiddleware(
 		tracer, zipkinhttp.TagResponseSize(true),
 	)
-
 	r := mux.NewRouter()
 	r.Handle("/baidu", alice.New(serverMiddleware).Then(http.HandlerFunc(IndexHandlerbaidu)))
 	r.Handle("/sina", alice.New(serverMiddleware).Then(http.HandlerFunc(IndexHandlersina)))
