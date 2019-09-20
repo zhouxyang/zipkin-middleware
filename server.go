@@ -9,6 +9,7 @@ import (
 	httpreporter "github.com/openzipkin/zipkin-go/reporter/http"
 	"log"
 	"net/http"
+	"time"
 )
 
 var tracer *zipkin.Tracer
@@ -58,6 +59,9 @@ func IndexHandlersina(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	span, _ := tracer.StartSpanFromContext(r.Context(), "some_operation")
+	time.Sleep(time.Millisecond)
+	span.Finish()
 	defer resp.Body.Close()
 	fmt.Fprintln(w, "success")
 }
